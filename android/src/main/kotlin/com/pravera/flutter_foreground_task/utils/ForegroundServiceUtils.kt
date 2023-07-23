@@ -1,5 +1,6 @@
 package com.pravera.flutter_foreground_task.utils
 
+
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
@@ -10,6 +11,10 @@ import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.WindowManager
+import com.pravera.flutter_foreground_task.utils.CallActivity
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+
 /**
  * Utilities that can be used while the foreground service is running.
  *
@@ -55,15 +60,15 @@ class ForegroundServiceUtils {
 		 * @param route Open this route if the app is closed
 		 */
 		fun launchApp(context: Context, route: String?) {
-			val pm = context.packageManager
-			val launchIntent = pm.getLaunchIntentForPackage(context.packageName)
-			if (launchIntent != null) {
-				launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-				if (route != null) {
-					launchIntent.putExtra("route", route)
-				}
-				context.startActivity(launchIntent)
-			}
+			val myIntent = FlutterActivity
+                .withNewEngine()
+                .initialRoute("/call")
+                .build(context)
+
+            myIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(
+                myIntent
+            );
 		}
 
 		/**
