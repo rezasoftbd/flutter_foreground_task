@@ -60,7 +60,6 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 	private var currFlutterEngine: FlutterEngine? = null
 	private var backgroundChannel: MethodChannel? = null
 	private var repeatTask: Job? = null
-	private var FOREGROUND_SERVICE_TYPE_LOCATION  =  8;
 	private var FOREGROUND_SERVICE_TYPE_MICROPHONE  =  128;
 
 	// A broadcast receiver that handles intents that occur within the foreground service.
@@ -231,7 +230,7 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 				builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
 			}
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-				startForeground(notificationOptions.id, builder.build(), FOREGROUND_SERVICE_TYPE_MICROPHONE or FOREGROUND_SERVICE_TYPE_LOCATION)
+				startForeground(notificationOptions.id, builder.build(), FOREGROUND_SERVICE_TYPE_MICROPHONE)
 			} else {
 				startForeground(notificationOptions.id, builder.build())
 			}
